@@ -12,10 +12,5 @@ require_once 'session_timeout_db.php';
 <p> It works </p>
 <?php include 'logout_db.php'; ?>
 </div>
-
-
-
-
-
 </body>
 </html>
