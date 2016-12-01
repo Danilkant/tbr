@@ -48,9 +48,16 @@ $sth->execute();
 $sth->setFetchMode(PDO::FETCH_ASSOC);
 $tempcomparray = $sth->fetchAll();
 
+$result = count($tempcomparray);
+
 
 $toReturn[$keyword1] = $tempuserarray;
-$toReturn[$keyword2] = $tempcomparray;
+if ($result > 1 ){
+array_push($toReturn[$keyword2], $tempcomparray);
+}
+else {
+	$toReturn[$keyword2] = $tempcomparray;
+}
 
 echo (json_encode($toReturn, JSON_UNESCAPED_SLASHES));
 ?>
