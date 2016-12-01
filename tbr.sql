@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2016 at 02:05 PM
+-- Generation Time: Dec 01, 2016 at 01:19 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -39,7 +39,8 @@ CREATE TABLE `comp` (
 --
 
 INSERT INTO `comp` (`id`, `games_id`, `compDate`, `description`, `prize`) VALUES
-(1, 1, '2020-01-21', 'Bob vs the World 2020 championship', 'Bobzor mouse, sorround sound screamo and a cent.');
+(1, 1, '2020-01-21', 'Bob vs the World 2020 championship', 'Bobzor mouse, sorround sound screamo and a cent.'),
+(2, 1, '2016-05-18', 'Who da best?', 'Tomato');
 
 -- --------------------------------------------------------
 
@@ -52,6 +53,14 @@ CREATE TABLE `comp_team` (
   `comp_id` int(11) DEFAULT NULL,
   `teams_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `comp_team`
+--
+
+INSERT INTO `comp_team` (`id`, `comp_id`, `teams_id`) VALUES
+(2, 1, 3),
+(3, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -197,12 +206,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `comp`
 --
 ALTER TABLE `comp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `comp_team`
 --
 ALTER TABLE `comp_team`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `game`
 --
