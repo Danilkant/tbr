@@ -7,7 +7,7 @@ $errors = [];
 $missing = [];
 
 //Expected fields in form
-$expected = ['username', 'password'];
+$expected = ['fname','username', 'password', 'email'];
 $required = ['username', 'password'];
 //Keyrt skriftur
 require './process.php';
@@ -16,22 +16,34 @@ require_once "connection.php";
 
 $error = '';
 if (isset($_POST['signup'])) {    
-    $full_name_from_signup = filter_var(trim($_POST['fname'], FILTER_SANITIZE_STRING)); 
-	$user_name_from_signup = trim($_POST['username'], FILTER_SANITIZE_STRING);
-	$user_password_from_signup = trim($_POST['password'], FILTER_SANITIZE_STRING);
-    $email_from_signup = trim($_POST['email'], FILTER_SANITIZE_STRING);
+
+//Fetching name value from URL and Santizing
+//Full name
+if ($_POST['fname'] != "") { 
+$full_name_from_signup = filter_var($_POST['fname'], FILTER_SANITIZE_STRING);
+//User name
+if ($_POST['username'] != "") {
+$user_name_from_signup = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+}
+//Password
+if ($_POST['password'] != "") {
+$user_password_from_signup = trim($_POST['password']);
+}
+//Email
+if ($_POST['email'] != "") {
+$email_from_signup = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+}
+} //END signup sanitizing
+
+$dbUsers = new User($connection);
+$status = $dbUsers->newUser($full_name_from_signup, $user_name_from_signup, $user_password_from_signup, $email_from_signup);
+
+if ($status) {
+    header('Location: login.php');
+}
+
     
-    $dbUsers = new User($connection);
-    $status = $dbUsers->newUser($full_name_from_signup, $user_name_from_signup, $user_password_from_signup, $email_from_signup);
-
-    if ($status) {
-        header('Location: hello.php');
-    }
-
-    else
-    {
-
-    }
+    
 }
 ?>
 
