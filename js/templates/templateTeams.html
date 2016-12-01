@@ -18,7 +18,7 @@
 		<div id="teamUsers">
 		<hr>
 			<accordion>
-			    <accordion-group heading="Manage Tean" is-open="true">
+			    <accordion-group heading="Manage Tea" is-open="true">
 					    <pre>User: {{selected | json}}</pre>
 					    <input placeholder="Username" type="text" ng-model="selected" typeahead="user for user in userData.lookUp(selected) | limitTo:8" class="form-control">
 					    <a>Add selected User</a>

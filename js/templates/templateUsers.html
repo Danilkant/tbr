@@ -23,11 +23,11 @@
 		</div>
 	</div>
 	<div class="large-4 columns" id="rightUser">
-		<ul class="small-block-grid-3 animate-container">
+		<ul class="small-block-grid-1 animate-container" ng-repeat="item in ud.TeamComps">
 			<li>
-				<p>{{ TeamComps.compID }}</p>
-				<p>{{ TeamComps.compDate }}</p>
-				<p>{{ TeamComps.gameName }}</p>
+				{{ item.gameName }} {{ item.compDate }}
+				<hr>
+				<a href="/teams/{{ item.ID }}">{{ item.TeamName }}</a>
 			</li>
 		</ul>
 	</div>

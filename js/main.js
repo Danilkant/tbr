@@ -34,6 +34,7 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
         url: '/php/post.teams.selected.php',
         data: {teamid: $scope.params.teamid}
       }).then(function successCallback(response) {
+        console.log(response.data);
           $scope.td = response.data;
         }, function errorCallback(response) {
           console.log("Failed to retrieve data Team Information.")
@@ -82,6 +83,7 @@ app.controller('UsersController', function($scope, $routeParams, $http){
         url: '/php/post.user.selected.php',
         data: {userid: $scope.params.userid}
       }).then(function successCallback(response){
+        console.log(response.data);
         $scope.ud = response.data;
       }, function errorCallback(response){
         console.log("no user info 4 u")

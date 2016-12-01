@@ -46,11 +46,11 @@ $sth = $dbh->prepare('SELECT
 $sth->bindParam(':ID', $ID, PDO::PARAM_INT);
 $sth->execute();
 $sth->setFetchMode(PDO::FETCH_ASSOC);
-$tempcomparray = $sth->fetch();
+$tempcomparray = $sth->fetchAll();
 
 
 $toReturn[$keyword1] = $tempuserarray;
-$toreturn[$keyword2] = $tempcomparray;
+$toReturn[$keyword2] = $tempcomparray;
 
 echo (json_encode($toReturn, JSON_UNESCAPED_SLASHES));
 ?>
