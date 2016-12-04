@@ -10,7 +10,7 @@ $required = ['uname', 'password'];
 
 //Keyrt skriftur
 require './process.php';
-require "Users.php";
+require "Klasar/Users.php";
 require_once "connection.php";
 
 $error = '';

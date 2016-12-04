@@ -1,52 +1,42 @@
 <?php
 
-$sql = 'SELECT * FROM user WHERE username = :username';
+if (isset($_POST['login'])) {    
+    $user_name_from_login = trim($_POST['username']);
+    $user_password = trim($_POST['password']);
+    // use sessionm if the form has been submitted
+    
+    // location to redirect on success, stored in a variable
+    $redirect = 'http://tsuts.tskoli.is/2t/0807932279/Lokaverkefni/hello.php';  
+    require 'encryption.php';
+}
 
+$sql = 'SELECT * FROM user WHERE username = :username';
 //Preparation 
 $stmt = $connection->prepare($sql);
 try {
-    //Executed and user bound to $
-	$stmt->execute(array(':username'=>$user_name_from_login));
-	$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	foreach ($results as $row) {
-		$database_password_hash = $row[ 'password' ];
-	}
-
-    //Password hashed using blowfish encryption
-	$user_password_rehashed = crypt($user_password_from_login, $database_password_hash);	
-
+    //Executed and user bound to a variable
+    $stmt->execute(array(':username'=>$user_name_from_login));
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($results as $row) {
+        $database_password_hash = $row[ 'password' ];
+    }    
 } catch (Exception $e) {
-	echo $e->getMessage();
+    echo $e->getMessage();
 }
-/*
-if 
-($user_password_rehashed == $database_password_hash) {
-echo '<br>';
-echo ' User’s login password “IS A MATCH” with the one in database (:';
-echo '<br>';
+
+if ($database_password_hash == $row['password']) {    
+    echo 'This password is OK';
+    return true;
 }
-else 
+
+else
 {
-echo '<br>';    
-echo ' User’s login password “DOES NOT MATCH” with the one in database ):';
-echo '<br>';
+    echo 'This password is not okay!';    
+    return false;
 }
 
-echo '<br>';
-echo ' $user_password_from_login = ' . $user_password_from_login;
-echo '<br>';
-echo ' $user_password_rehashed --- = ' . $user_password_rehashed;
-echo '<br>'; 
-echo ' $database_password_hash ---  = ' . $database_password_hash;
-echo '<br>';
-*/
-$storedPwd = $user_password_rehashed;
-
-// check the submitted password against the stored version, matches a hash
-// password_verify virkar ekki á tsuts.tskoli.is (eldri útgáfa af php á miðlaranum)
-// if (password_verify($password, $storedPwd)) {
-
-  if ($storedPwd){       
+ if ($database_password_hash == $row['password'])){ 
+    session_start();      
     $_SESSION['authenticated'] = 'Jethro Tull';
     // get the time the session started
     $_SESSION['start'] = time();

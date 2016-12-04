@@ -14,6 +14,7 @@ require './process.php';
 require 'Klasar/Users.php';
 require_once "connection.php";
 
+
 $error = '';
 if (isset($_POST['signup'])) {    
 
@@ -27,19 +28,19 @@ $user_name_from_signup = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
 }
 //Password
 if ($_POST['password'] != "") {
-$user_password_from_signup = trim($_POST['password']);
+$user_password = trim($_POST['password']);
 }
 //Email
 if ($_POST['email'] != "") {
 $email_from_signup = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 }
 } //END signup sanitizing
-
+require 'encryption.php';
 $dbUsers = new User($connection);
-$status = $dbUsers->newUser($full_name_from_signup, $user_name_from_signup, $user_password_from_signup, $email_from_signup);
+$status = $dbUsers->newUser($full_name_from_signup, $user_name_from_signup, $database_password_hash, $email_from_signup);
 
 if ($status) {
-    header('Location: login.php');
+    header('Location: formtest.php');
 }
 
     
@@ -98,7 +99,7 @@ if ($status) {
         <label>Password
           <input name="password" type="text" id="password" placeholder="Password">
         <?php if ($missing || $errors) {
-            echo 'value="' . htmlentities($user_password_from_signup) . '"';
+            echo 'value="' . htmlentities($user_password) . '"';
             } ?>         
         </label>
 

@@ -133,6 +133,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(14) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `salt` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `isAdmin` tinyint(1) DEFAULT NULL,

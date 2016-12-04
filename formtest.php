@@ -14,17 +14,7 @@ require './process.php';
 require_once "connection.php";
 
 $error = '';
-if (isset($_POST['login'])) {
-    session_start(); 
-	$user_name_from_login = trim($_POST['username']);
-	$user_password_from_login = trim($_POST['password']);
-    // use sessionm if the form has been submitted
-    
-    // location to redirect on success, stored in a variable
-    $redirect = 'http://tsuts.tskoli.is/2t/0807932279/Lokaverkefni/hello.php';
-    // authentication
-    require_once 'authentication.php';
-}
+
 ?>
 
 <!DOCTYPE html>
