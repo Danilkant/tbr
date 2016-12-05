@@ -1,4 +1,5 @@
 <div class="large-offset-2 large-8 columns" ng-init="teamData.getData()">
+	<alert ng-show="alertDisplayed" type="currentAlert.type"><b>{{ currentAlert.msg }}</b></alert>
 	<div class="large-8 columns" id="leftTeam">
 		<div id="teamInfo">
 			<ul class="small-block-grid-2 animate-container">
@@ -11,9 +12,9 @@
 				</li>
 			
 			</ul>
-			<textarea rows="4" cols="50">
-				{{ td.Team.Descr }}
-			</textarea>
+			<input ng-model="update_imglink" type="text">
+			<textarea ng-model="update_desc" rows="4"></textarea>
+			<a ng-click="updateTeam(update_imglink, update_desc)">Update Info as provided</a>
 		</div>
 		<div id="teamUsers">
 		<hr>
@@ -21,8 +22,6 @@
 			    <accordion-group heading="Manage Team" is-open="true">
 					    <pre>Username: {{selected | json}}</pre>
     <input type="text" ng-model="selected" placeholder="Look up a username" typeahead="user.Username for user in userData.lookUp($viewValue)" class="form-control">
-  
-
 					    <a ng-click="userData.addUserTeam(selected)">Add selected User</a>
 			      		<hr>
 			      		<label class="checkbox">
@@ -44,8 +43,20 @@
 		</div>
 		
 	</div>
-	<div class="large-4 columns" id="rightTeam">
+	<div class="large-4 columns" id="rightTeam" ng-init="compData.getData()">
+		<div id="teamComp">
 		<hr>
-		<a href="/">Go Back</a>
+			<accordion>
+			    <div ng-repeat="item in cd">
+			    	<accordion-group is-open="isopen">
+				        <accordion-heading>
+				        	{{ item.gameName }} {{ item.compDate }}
+				        </accordion-heading>
+				        <a ng-click="userData.removeUserTeam()">Exit Competition</a>
+				    </accordion-group>
+			    </div>
+
+			</accordion>
+		</div>
 	</div>
 </div>

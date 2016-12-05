@@ -19,7 +19,8 @@ $sth = $dbh->prepare('SELECT
 		teamname as Name, 
 		teamtag as Tag, 
 		description as Descr, 
-		imgLink as ImgLink
+		imgLink as ImgLink,
+		teamOwner as Owner
     from team
     where id = :ID
     ');
