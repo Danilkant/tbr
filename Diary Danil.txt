@@ -1,0 +1,34 @@
+Danil Diary:
+
+
+15/11/16
+
+Created GitHub Repository for TBR
+
+17/11/16
+
+Having decided with the group what project we're going to do uploading the required files for it.
+
+18/11/16
+
+Basic webpage layout drawn in PAIN.NET
+
+22/11/16
+
+Designed Database for the webpage, uploading on git for access
+
+23/11/16
+
+Starting on my part of the project
+
+24/11/16
+
+Still working on project whilst explaining certain things with ANGULAR and PHP to my group
+
+1/12/16
+
+Helping Stefan with Angular
+
+3/12/16
+
+Wraping up loose ends in my part and starting on everything else that's missing

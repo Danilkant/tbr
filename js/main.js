@@ -34,7 +34,6 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
         url: '/php/post.teams.selected.php',
         data: {teamid: $scope.params.teamid}
       }).then(function successCallback(response) {
-        console.log(response.data);
           $scope.td = response.data;
         }, function errorCallback(response) {
           console.log("Failed to retrieve data Team Information.")
@@ -46,26 +45,48 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
   $scope.deleteTeam = function(check){
     console.log(check);
     if(check == true){
-      alert("I am a function rawr");
+      $http({
+        method: 'POST',
+        url: '/php/post.teams.delete.php',
+        data: {teamid: $scope.params.teamid}
+      }).then(function successCallback(response) {
+          $location.path('/main');
+        }, function errorCallback(response) {
+          return ["Failed to delete team."];
+        });
     }
   };
 
   $scope.userData = {
-    ud: null,
 
-    lookUp: function(text){
-      var toReturn;
-
-      $http({
+    lookUp: function(val){
+      return $http({
         method: 'POST',
         url: '/php/post.user.lookup.php',
-        data: {username: text}
-      }).then(function successCallback(response) {
-        }, function errorCallback(response) {
-          return ["Failed to find user."];
-        });
+        data: {username: val}
+      }).then(function (response) {
+        return response.data;
+      });
+    },
 
-      return toReturn;
+    addUserTeam: function(val){
+      $http({
+        method: 'POST',
+        url: '/php/post.teams.user.php',
+        data: {username: val, teamid: $scope.params.teamid}
+      }).then(function successCallback(response) {
+        $scope.teamData.getData();
+      });
+    },
+
+    removeUserTeam: function(val){
+      $http({
+        method: 'POST',
+        url: '/php/post.teams.remove.user.php',
+        data: {userid: val}
+      }).then(function successCallback(response) {
+        $scope.teamData.getData();
+      });
     }
   };
 });

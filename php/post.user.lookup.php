@@ -2,15 +2,15 @@
 
 require('init.database.php');
 
-//$data = json_decode(file_get_contents('php://input'));
+$data = json_decode(file_get_contents('php://input'));
 
-$username = "o";
+$username = $data->username;
 
 $toReturn = [];
 
 $sth = $dbh->prepare('SELECT 
 		id as ID, 
-		username as Name
+		username as Username
     from user
     where INSTR(username, :username) > 0
     ');

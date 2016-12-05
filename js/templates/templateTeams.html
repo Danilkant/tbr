@@ -18,10 +18,12 @@
 		<div id="teamUsers">
 		<hr>
 			<accordion>
-			    <accordion-group heading="Manage Tea" is-open="true">
-					    <pre>User: {{selected | json}}</pre>
-					    <input placeholder="Username" type="text" ng-model="selected" typeahead="user for user in userData.lookUp(selected) | limitTo:8" class="form-control">
-					    <a>Add selected User</a>
+			    <accordion-group heading="Manage Team" is-open="true">
+					    <pre>Username: {{selected | json}}</pre>
+    <input type="text" ng-model="selected" placeholder="Look up a username" typeahead="user.Username for user in userData.lookUp($viewValue)" class="form-control">
+  
+
+					    <a ng-click="userData.addUserTeam(selected)">Add selected User</a>
 			      		<hr>
 			      		<label class="checkbox">
 							<input type="checkbox" ng-model="confirmDelete">
@@ -34,7 +36,7 @@
 				        <accordion-heading>
 				            {{ user.Name }}
 				        </accordion-heading>
-				        <a>Remove Userq</a>
+				        <a ng-click="userData.removeUserTeam(user.ID)">Remove User</a>
 				    </accordion-group>
 			    </div>
 
