@@ -174,7 +174,6 @@ app.controller('UsersController', function($scope, $routeParams, $http){
         url: '/php/post.user.selected.php',
         data: {userid: $scope.params.userid}
       }).then(function successCallback(response){
-        console.log(response.data);
         $scope.ud = response.data;
       }, function errorCallback(response){
         console.log("no user info 4 u")
@@ -185,19 +184,22 @@ app.controller('UsersController', function($scope, $routeParams, $http){
 
 });
 
-app.controller('MainController', function($timeout, $scope, $route, $routeParams, $location, $cookies, $cookieStore) {
+app.controller('MainController', function($modal, $timeout, $scope, $route, $routeParams, $location, $cookies, $cookieStore) {
     $scope.$route = $route;
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
+    $scope.currentUser = $cookies.getObject('currentUser');
     $scope.currentAlert = null;
     $scope.validateAlert = {
       warning: {type: 'warning', msg: "Unauthorized User!"},
-      success: {type: 'success', msg: "The action was successful!"}
+      success: {type: 'success', msg: "The action was successful!"},
+      loginFailed: {type: 'warning', msg: "The login has failed, try again."},
+      loginSuccess: {type: 'success', msg: "You have been logged in."}
     };
+     $scope.items = ['item1', 'item2', 'item3'];
 
     $scope.validateMe = function(){
-        //cookie login for now set to true
-        return 2;
+        return currentUser.id;
     }
 
     $scope.warnMe = function(alert) {
@@ -207,7 +209,51 @@ app.controller('MainController', function($timeout, $scope, $route, $routeParams
         $scope.alertDisplayed = false;
       }, 2000)
     };
+
+    $scope.logout = function() {
+      $cookies.remove('currentUser');
+      $scope.currentUser = null;
+    };
 });
+
+app.controller('LoginController', function($location, $scope, $routeParams, $http, $cookies, $cookieStore){
+  $scope.name = 'LoginController';
+  $scope.params = $routeParams;
+
+  $scope.login = function(username, password){
+    $http({
+          method: 'POST',
+          url: '/php/cookie.user.login.php',
+          data: {username: username, password: password}
+        }).then(function successCallback(response) {
+          if(typeof response.data === 'object'){
+            $cookies.putObject('currentUser', response.data);
+            $location.path('/main');
+            $route.reload();
+            $scope.warnMe("loginSuccess");
+          }else{
+            $scope.warnMe("loginFailed");
+          }    
+    });
+  };
+
+  $scope.forgot = function(username){
+    
+  };
+
+
+});
+
+app.controller('RegisterController', function($scope, $routeParams, $http){
+  $scope.name = 'RegisterController';
+  $scope.params = $routeParams;
+
+  $scope.register = function(username, password){
+
+  };
+
+});
+
 
 app.config(function($routeProvider, $locationProvider){
   $locationProvider.html5Mode(true).hashPrefix('!');
@@ -223,6 +269,14 @@ app.config(function($routeProvider, $locationProvider){
     .when('/users/:userid', {
       templateUrl: '/js/templates/templateUsers.html',
       controller: 'UsersController'
+    })
+    .when('/login', {
+      templateUrl: '/js/templates/templateLogin.html',
+      controller: 'LoginController'
+    })
+    .when('/register', {
+      templateUrl: '/js/templates/templateRegister.html',
+      controller: 'RegisterController'
     })
     .otherwise({
       redirectTo: '/main'

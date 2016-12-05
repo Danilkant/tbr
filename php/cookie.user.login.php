@@ -9,7 +9,7 @@
 
     $cost = 10;
 
-    $sth = $dbh->prepare('SELECT id, password FROM user WHERE username = :username');
+    $sth = $dbh->prepare('SELECT id, username, password FROM user WHERE username = :username');
     $sth->bindParam(':username', $username);
               
     $sth->execute();
@@ -18,9 +18,8 @@
 
 	// Hashing the password with its hash as the salt returns the same hash
 	if ( hash_equals($user->password, crypt($password, $user->password)) ){
-	  
-	  	echo $user->id;
+	  	echo json_encode(["id"=>$user->id, "username"=>$user->username]);
 	}else{
-		echo "false";
+		echo json_encode("failed");
 	}
 ?>

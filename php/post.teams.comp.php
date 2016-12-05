@@ -12,6 +12,8 @@ $keyword1 = "Comp";
 $sth = $dbh->prepare('SELECT
 	ct.comp_id AS compID,
 	c.compDate AS compDate,
+	c.description AS compDescr,
+	c.prize AS Prize,
 	g.name AS gameName
 	from comp_team ct
 	inner join comp c on ct.comp_id = c.id

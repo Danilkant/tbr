@@ -1,5 +1,4 @@
-<div class="large-offset-2 large-8 columns" ng-init="teamData.getData()">
-	<alert ng-show="alertDisplayed" type="currentAlert.type"><b>{{ currentAlert.msg }}</b></alert>
+<div ng-init="teamData.getData()">
 	<div class="large-8 columns" id="leftTeam">
 		<div id="teamInfo">
 			<ul class="small-block-grid-2 animate-container">
@@ -12,7 +11,9 @@
 				</li>
 			
 			</ul>
+			<pre>This is your image link:</pre>
 			<input ng-model="update_imglink" type="text">
+			<pre>This is your teams description:</pre>
 			<textarea ng-model="update_desc" rows="4"></textarea>
 			<a ng-click="updateTeam(update_imglink, update_desc)">Update Info as provided</a>
 		</div>
@@ -45,13 +46,18 @@
 	</div>
 	<div class="large-4 columns" id="rightTeam" ng-init="compData.getData()">
 		<div id="teamComp">
-		<hr>
+		<h5>The team is in:</h5>
 			<accordion>
 			    <div ng-repeat="item in cd">
 			    	<accordion-group is-open="isopen">
 				        <accordion-heading>
 				        	{{ item.gameName }} {{ item.compDate }}
 				        </accordion-heading>
+				        <pre>Description:</pre>
+				        <p>{{ item.compDescr }}</p>
+				        <pre>Prizes:</pre>
+				        <p>{{ item.Prize }}</p>
+				        <hr>
 				        <a ng-click="userData.removeUserTeam()">Exit Competition</a>
 				    </accordion-group>
 			    </div>

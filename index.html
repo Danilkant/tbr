@@ -4,7 +4,7 @@
         <base href="/"></base>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Welcome</title>
+        <title>Tskoli Elite</title>
         <link rel="stylesheet" href="css/foundation.css" />
         <link rel="stylesheet" href="css/main.css" />
 
@@ -17,12 +17,46 @@
         <script type="text/javascript" src="/js/main.js"></script>
     </head>
 
-    <body ng-app="SomeApp">
-    <div route-loader>
-        <i>Loading…</i>
-    </div>    
+    <body ng-app="SomeApp" class="large-offset-2 large-8 columns">
     <div ng-controller="MainController">
+    <div class="mainView">
+    </div>
+    <div class="menu">
+        <top-bar>
+            <ul class="title-area">
+              <li class="name">
+                <h1><a href="/main">Tskoli Elite</a></h1>
+              </li>
+              <li toggle-top-bar class="menu-icon"><a href="#">Menu</a></li>
+            </ul>
+
+            <top-bar-section>
+              <!-- Right Nav Section -->
+              <ul class="right">
+                
+              </ul>
+
+              <!-- Left Nav Section -->
+              <ul class="left">
+                <li ng-show="currentUser"><a href="/users/{{currentUser.id}}"><b>Welcome: {{currentUser.username}}</b></a></li>
+                <li ng-show="currentUser"><a ng-click="logout()"><b>Log out</b></a></li>
+                <li ng-hide="currentUser"><a href="/login"><b>Log in</b></a></li>
+              </ul>
+            </top-bar-section>
+        </top-bar>
+    </div>  
+    <div class="wrapper">
+        <div route-loader>
+            <h1 class="loading">Hang on just a second...</h1>
+        </div>
+        <alert ng-show="alertDisplayed" type="currentAlert.type"><b>{{ currentAlert.msg }}</b></alert>
         <div ng-view></div>
+        <div class="push"></div>
+    </div>
+    <div class="footer" class="panel">
+        <p><b>All rights belong to the respected owner of the object in question</b></p>
+        <p><b>The open source code can be found on: </b><a href="https://github.com/Danilkant/tbr/">GitHub</a></p>
+    </div>
     </div>
     </body>
 </html>
