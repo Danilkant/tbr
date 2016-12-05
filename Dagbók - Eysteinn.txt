@@ -1,0 +1,33 @@
+﻿Dagbók fyrir lokaverkefni - Eysteinn Orri Sigurðsson
+
+Ég sá um meirihlutann af PHP vinnuni. Mikið af mínum tíma fór í að gera login og signup kerfi með hashing og sanitizing.
+
+17. Nóv
+Ákveðið verkefni til þess að gera.
+Ræðum hvernig vefsíðu skal gera og hvernig hún yrði hönnuð.
+Einnig rætt verkaskipting og teiknað upp template fyrir vefsíðu
+
+24. Nóv
+Byrjað að vinna í að finna út hvernig PHP og Angular vinnur saman
+Ég byrja að skrifa upp klasa sem mun sjá um helstu birtingar gagna af gagnagrunni
+
+29. Nóv
+Áfram unnið í klasa og byrjað að huga að login og signup kerfi fyrir vefsíðu
+
+30. Nóv
+Breytt klasa í takt við síðu og byrjað á einföldu log in kerfi með sessions.
+
+01. Des
+Log in komið í lag og virkar með session/cookies. Byrjað á sign up kerfinu. Passað að input séu sanitize'uð áður en þau fara inn í gagnagrunninn. Einnig sett blowfish hashing á password eftir lestur um hvað md5 er lélegt. 
+
+02.Des
+Áfram unnið með sign up kerfi og fengið hashing til þess að virka rétt þegar nýr user er búinn til á síðu. Byrjað að finna út hvernig hægt sé að bera saman login input password við database hashed password.
+
+03.Des 
+Áfram baslað við login kerfið til þess að fá það almennilega í gang.
+
+Dagbók fram í tímann því við urðum eftir áætlun
+05. Des
+Klárað Sign up og Login
+
+06. Hópur hittist og klárað klasa til þess að birta gögn á vefsíðu með angular. (Þetta var lang mesta vinnan því angular var töluvert flóknara en við héldum.) 
