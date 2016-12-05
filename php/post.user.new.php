@@ -28,12 +28,24 @@
 
     $toSend = "";
 
+    $cost = 10;
+
+    // Create a random salt
+    $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+
+    // Prefix information about the hash so PHP knows how to verify it later.
+    // "$2a$" Means we're using the Blowfish algorithm. The following two digits are the cost parameter.
+    $salt = sprintf("$2a$%02d$", $cost) . $salt;
+
+    // Hash the password with the salt
+    $hash = crypt($password, $salt);
+
     $sth = $dbh->prepare('INSERT INTO user(username, name, email, password)
                     VALUES (:username, :name, :email, :password)');
     $sth->bindParam(':username', $username);
     $sth->bindParam(':name', $name);
     $sth->bindParam(':email', $email);
-    $sth->bindParam(':password', $password);
+    $sth->bindParam(':password', $hash);
 
     $toSend = "Thank you for signing up to Tskoli Elite. Here is your temporary password: ".$password;
 

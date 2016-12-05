@@ -193,13 +193,14 @@ app.controller('MainController', function($modal, $timeout, $scope, $route, $rou
     $scope.validateAlert = {
       warning: {type: 'warning', msg: "Unauthorized User!"},
       success: {type: 'success', msg: "The action was successful!"},
+      failed: {type: 'warning', msg: "The action was unsuccessful."},
       loginFailed: {type: 'warning', msg: "The login has failed, try again."},
       loginSuccess: {type: 'success', msg: "You have been logged in."}
     };
      $scope.items = ['item1', 'item2', 'item3'];
 
     $scope.validateMe = function(){
-        return currentUser.id;
+        return 1;
     }
 
     $scope.warnMe = function(alert) {
@@ -237,7 +238,7 @@ app.controller('LoginController', function($location, $scope, $routeParams, $htt
     });
   };
 
-  $scope.forgot = function(username){
+  $scope.forgot = function(){
     
   };
 
@@ -248,8 +249,15 @@ app.controller('RegisterController', function($scope, $routeParams, $http){
   $scope.name = 'RegisterController';
   $scope.params = $routeParams;
 
-  $scope.register = function(username, password){
-
+  $scope.register = function(){
+    $http({
+          method: 'POST',
+          url: '/php/post.user.new.php',
+          data: {username: form_username, name: form_name, email: form_email}
+        }).then(function successCallback(response) {
+            $location.path('/login');
+            $scope.warnMe("success");
+    });
   };
 
 });
