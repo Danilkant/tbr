@@ -168,21 +168,95 @@ app.controller('UsersController', function($scope, $routeParams, $http){
   $scope.name = 'UsersController';
   $scope.params = $routeParams;
 
-  $scope.userData = {
-    ud: null,
+  
+  $scope.teamData = {
+    td: null,
 
     getData: function(){
       $http({
         method: 'POST',
-        url: '/php/post.user.selected.php',
+        url: '/php/post.teams.selected.php',
+        data: {teamid: $scope.params.teamid}
+      }).then(function successCallback(response) {
+          $scope.td = response.data;
+
+
+        }, function errorCallback(response) {
+          console.log("Failed to retrieve data Team Information.")
+        });
+    }
+
+  };
+
+
+  $scope.userData = {
+    ud: null,
+
+    inputEmail: null,
+    inputUsername: null,
+    inputPassword: null,
+    inputTeamName: null,
+    inputTeamTag: null,
+    inputTeamDesc: null,
+
+    getData: function(){
+      $http({
+        method: 'POST',
         data: {userid: $scope.params.userid}
       }).then(function successCallback(response){
         $scope.ud = response.data;
+        console.log("accordion is love, accordion is life");
       }, function errorCallback(response){
         console.log("no user info 4 u")
       });
-    }
-  };
+    },//getdata end
+
+    removeUserTeam: function(val, val2) {
+      $http({
+        method: 'POST',
+        url: '/php/post.teams.remove.user.php',
+        data: {userid: val, teamid: val2}
+      }).then(function successCallback(response){
+        $scope.userData.getData();
+        console.log(response);
+      });
+    },//removeuserteam func end
+
+    updateUserPassword: function(val, val2){
+      $http({
+        method: 'POST',
+        url: '/php/post.user.password.update.php',
+        data: {userid: val, password: val2}
+      }).then(function successCallback(response){
+        $scope.userData.getData();
+        console.log(response);
+      });
+    },//update userpasswrod end
+
+     updateUserEmail: function(val, val2){
+      console.log(val, val2);
+      $http({
+        method: 'POST',
+        url: '/php/post.user.update.php',
+        data: {userid: $scope.params.userid, email: val, username: val2}
+      }).then(function successCallback(response){
+        $scope.userData.getData();
+        console.log(response);
+      });
+    },//function end
+
+    userCreateNewTeam: function(val, val2, val3, val4){
+      console.log(val, val2, val3, val4);
+      $http({
+        method: 'POST',
+        url: '/php/post.teams.new.php',
+        data: {teamname: val, teamtag: val2, desc: val3, userid: val4}
+      }).then(function successCallback(response){
+        $scope.userData.getData();
+    console.log(response);
+      });
+    }//function end
+  };//scope end
 
 
 });
