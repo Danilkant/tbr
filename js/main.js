@@ -48,7 +48,7 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
   };
 
   $scope.deleteTeam = function(check){
-    if($scope.validateMe() == $scope.td.Team.Owner){
+    if($scope.currentUser.id == $scope.td.Team.Owner){
       if(check == true){
         $http({
           method: 'POST',
@@ -67,7 +67,7 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
   };
 
   $scope.updateTeam = function(val1, val2){
-    if($scope.validateMe() == $scope.td.Team.Owner){
+    if($scope.currentUser.id == $scope.td.Team.Owner){
       $http({
           method: 'POST',
           url: '/php/post.teams.update.php',
@@ -99,15 +99,17 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
     },
 
     removeTeamComp: function(val){
-      if($scope.validateMe() == $scope.td.Team.Owner){
+      if($scope.currentUser.id == $scope.td.Team.Owner){
+        console.log(val);
         $http({
           method: 'POST',
-          url: '/php/post.teams.remove.user.php',
-          data: {teamid: $scope.params.teamid}
+          url: '/php/post.comp.remove.team.php',
+          data: {teamid: $scope.params.teamid, compid: val}
         }).then(function successCallback(response) {
+          $scope.warnMe("success");
           $scope.compData.getData();
         });
-        $scope.warnMe("success");
+
       }else{
         $scope.warnMe("warning");
       } 
@@ -129,7 +131,7 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
     },
 
     addUserTeam: function(val){
-      if($scope.validateMe() == $scope.td.Team.Owner){
+      if($scope.currentUser.id == $scope.td.Team.Owner){
            $http({
             method: 'POST',
             url: '/php/post.teams.user.php',
@@ -144,7 +146,8 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
     },
 
     removeUserTeam: function(val){
-      if($scope.validateMe() == $scope.td.Team.Owner){
+      if($scope.currentUser.id == $scope.td.Team.Owner){
+        console.log(true);
         $http({
           method: 'POST',
           url: '/php/post.teams.remove.user.php',
@@ -184,7 +187,90 @@ app.controller('UsersController', function($scope, $routeParams, $http){
 
 });
 
-app.controller('MainController', function($modal, $timeout, $scope, $route, $routeParams, $location, $cookies, $cookieStore) {
+app.controller('CompController', function($scope, $http) {
+    $scope.name = 'CompController';
+
+    $scope.compData = {
+      cd: null,
+
+      getData: function(){
+        $http({
+          method: 'POST',
+          url: '/php/post.comp.all.php'
+        }).then(function successCallback(response){
+          $scope.cd = response.data;
+        });
+      }
+    }
+
+    $scope.teamData = {
+      td: null,
+
+      getData: function(){
+        $http({
+          method: 'POST',
+          url: '/php/post.teams.user.selected.php',
+          data: {userid: $scope.currentUser.id}
+        }).then(function successCallback(response){
+          $scope.td = response.data;
+        });
+      }
+    }
+
+    $scope.gameData = {
+      gd: null,
+
+      getData: function(){
+        $http({
+          method: 'POST',
+          url: '/php/post.game.all.php'
+        }).then(function successCallback(response){
+          $scope.gd = response.data;
+        });
+      }
+    }
+
+    $scope.registerTeam = function(compid, teamid){
+      $scope.teamData.getData()
+        $http({
+            method: 'POST',
+            url: '/php/post.comp.team.php',
+            data: {compid: compid, teamid: teamid}
+          }).then(function successCallback(response){
+            $scope.warnMe("success");
+        });
+    }
+});
+
+app.controller('AdminController', function($scope, $http) {
+    $scope.name = 'AdminController';
+
+    $scope.gameData = {
+      gd: null,
+
+      getData: function(){
+        $http({
+          method: 'POST',
+          url: '/php/post.game.all.php'
+        }).then(function successCallback(response){
+          $scope.gd = response.data;
+        });
+      }
+    }
+
+    $scope.createComp = function(id, date, desc, prize){
+      $http({
+          method: 'POST',
+          url: '/php/post.comp.create.php',
+          data: {gameid: id, date: date, desc: desc, prize: prize}
+        }).then(function successCallback(response){
+          window.location = "/main";
+          $scope.warnMe("success");
+        });
+    }
+});
+
+app.controller('MainController', function($modal, $http, $timeout, $scope, $route, $routeParams, $location, $cookies, $cookieStore) {
     $scope.$route = $route;
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
@@ -199,10 +285,6 @@ app.controller('MainController', function($modal, $timeout, $scope, $route, $rou
     };
      $scope.items = ['item1', 'item2', 'item3'];
 
-    $scope.validateMe = function(){
-        return 1;
-    }
-
     $scope.warnMe = function(alert) {
         $scope.currentAlert = $scope.validateAlert[alert];
         $scope.alertDisplayed = true;
@@ -215,9 +297,24 @@ app.controller('MainController', function($modal, $timeout, $scope, $route, $rou
       $cookies.remove('currentUser');
       $scope.currentUser = null;
     };
+
+    $scope.isAdmin = function(){
+      var temp = $scope.currentUser.id;
+      if(temp != null){
+        $http({
+          method: 'POST',
+          url: '/php/post.isAdmin.php',
+          data: {userid: temp}
+        }).then(function successCallback(response){
+          $scope.currentUser["admin"] = response.data;
+        });
+      }else{
+        return false;
+      }
+    };
 });
 
-app.controller('LoginController', function($location, $scope, $routeParams, $http, $cookies, $cookieStore){
+app.controller('LoginController', function($scope, $routeParams, $http, $cookies, $cookieStore){
   $scope.name = 'LoginController';
   $scope.params = $routeParams;
 
@@ -229,33 +326,25 @@ app.controller('LoginController', function($location, $scope, $routeParams, $htt
         }).then(function successCallback(response) {
           if(typeof response.data === 'object'){
             $cookies.putObject('currentUser', response.data);
-            $location.path('/main');
-            $route.reload();
+            window.location = "/main";
             $scope.warnMe("loginSuccess");
           }else{
             $scope.warnMe("loginFailed");
           }    
     });
   };
-
-  $scope.forgot = function(){
-    
-  };
-
-
 });
 
 app.controller('RegisterController', function($scope, $routeParams, $http){
   $scope.name = 'RegisterController';
-  $scope.params = $routeParams;
 
-  $scope.register = function(){
+  $scope.register = function(username, name, email){
     $http({
           method: 'POST',
           url: '/php/post.user.new.php',
-          data: {username: form_username, name: form_name, email: form_email}
+          data: {username: username, name: name, email: email}
         }).then(function successCallback(response) {
-            $location.path('/login');
+            window.location = "/login";
             $scope.warnMe("success");
     });
   };
@@ -268,7 +357,7 @@ app.config(function($routeProvider, $locationProvider){
 
   $routeProvider
     .when('/main', {
-      templateUrl: '/js/templates/templateHome.html',
+      templateUrl: '/js/templates/templateHome.html'
     })
     .when('/teams/:teamid', {
       templateUrl: '/js/templates/templateTeams.html',
@@ -285,6 +374,10 @@ app.config(function($routeProvider, $locationProvider){
     .when('/register', {
       templateUrl: '/js/templates/templateRegister.html',
       controller: 'RegisterController'
+    })
+    .when('/admin', {
+      templateUrl: '/js/templates/templateAdminPage.html',
+      controller: 'AdminController'
     })
     .otherwise({
       redirectTo: '/main'

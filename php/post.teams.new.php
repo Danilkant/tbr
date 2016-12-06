@@ -9,7 +9,7 @@
 
     $description = $data->desc;
 
-    $sth = $dbh->prepare('INSERT IGNORE INTO teams(teamname, teamtag, description)
+    $sth = $dbh->prepare('INSERT IGNORE INTO team(teamname, teamtag, description)
                     VALUES (:teamname, :teamtag, :description)');
     $sth->bindParam(':teamname', $teamname);
     $sth->bindParam(':teamtag', $teamtag);

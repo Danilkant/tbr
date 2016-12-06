@@ -31,7 +31,7 @@
 						</label>
 			      		<a ng-click="deleteTeam(confirmDelete)">Delete Team</a>
 			    </accordion-group>
-			    <div ng-repeat="user in td.User">
+			    <div ng-repeat="user in td.User" ng-if="user.ID != td.Team.Owner">
 			    	<accordion-group is-open="isopen">
 				        <accordion-heading>
 				            {{ user.Name }}
@@ -58,7 +58,7 @@
 				        <pre>Prizes:</pre>
 				        <p>{{ item.Prize }}</p>
 				        <hr>
-				        <a ng-click="userData.removeUserTeam()">Exit Competition</a>
+				        <a ng-click="compData.removeTeamComp(item.compID)">Exit Competition</a>
 				    </accordion-group>
 			    </div>
 

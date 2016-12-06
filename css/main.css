@@ -73,3 +73,17 @@ button:hover{
 	border:0.05em solid black !important;
 	background-color: #A7C249 !important;
 }
+
+.competitionItem{
+	text-align: center;
+	margin: 1em 1em 1em 1em;
+	border:0.1em solid black;
+	background-color: #EEE9EF;
+}
+
+.competitionItem:hover{
+	text-align: center;
+	margin: 1em 1em 1em 1em;
+	border:0.1em solid black;
+	background-color: #FFEFAA;
+}

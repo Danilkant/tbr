@@ -1,3 +1,31 @@
-    <div class="large-offset-2 large-8 columns">
-    	{{$cookie.get('currentUser')}}
-    </div>
+<div class="competitionTable" ng-controller="CompController">
+	<div ng-init="compData.getData()" class="large-12 columns">
+		<div class="competitions">
+			<div class="button-group">
+				<div  ng-repeat="item in cd" class="competitionItem">
+					<a ng-model="compData.radioSelected" btn-radio="{{item}}"><b>{{item.gameName}} {{item.compDate}}</b></a>
+				</div>
+			</div>
+		</div>
+		<div ng-if="compData.radioSelected != null" class="animate-if">
+		<div class="competitionsInfo">
+			<div class="small-4 columns">
+				<img class="image-cropper" src="{{ compData.radioSelected.localPath }}" alt="Team Image">
+			</div>
+			<div class="small-8 columns">
+				<h4>{{ compData.radioSelected.gameName }} {{ compData.radioSelected.compDate }}</h4>
+				<h5>Maximum players: {{compData.radioSelected.maxPlayers}}</h5>
+				<h5>Prize pool: {{compData.radioSelected.prize}}</h5>
+				<p>{{compData.radioSelected.compDescr}}</p>
+			</div>
+			<div ng-if="currentUser != null" ng-init="teamData.getData()">
+				<div class="small-8 columns small-offset-4">
+					<select ng-model="selectTeam" ng-options="item.ID as item.TeamName for item in td">
+					</select>
+					<a ng-click="registerTeam(compData.radioSelected.compID,	selectTeam)">Enter as team</a>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>

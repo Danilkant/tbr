@@ -20,6 +20,8 @@
     <body ng-app="SomeApp" class="large-offset-2 large-8 columns">
     <div ng-controller="MainController">
     <div class="mainView">
+    <img class="image-cropper" src="https://cdn2.iconfinder.com/data/icons/busy-icons-finance-33-hand-drawn-finance-icons/120/0205-diamond-512.png" alt="Tskoli Elite Image">
+    
     </div>
     <div class="menu">
         <top-bar>
@@ -51,7 +53,6 @@
         </div>
         <alert ng-show="alertDisplayed" type="currentAlert.type"><b>{{ currentAlert.msg }}</b></alert>
         <div ng-view></div>
-        <div class="push"></div>
     </div>
     <div class="footer" class="panel">
         <p><b>All rights belong to the respected owner of the object in question</b></p>

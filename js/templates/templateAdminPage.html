@@ -1,0 +1,18 @@
+<div ng-init="isAdmin()">
+	<div ng-if="currentUser.admin" class="large-6 columns large-offset-3">
+		<pre>Admin is boring</pre>
+		<accordion>
+			<accordion-group heading="Create Competition" is-open="false">
+				<pre ng-init="gameData.getData()">Game ID</pre>
+				<select ng-model="adminGameID" ng-options="item.id as item.name for item in gd"></select>
+				<pre>Competition Date</pre>
+				<input ng-model="adminDate" type="date">
+				<pre>Description</pre>
+				<input ng-model="adminDesc" type="text">
+				<pre>Prize Pool</pre>
+				<input ng-model="adminPrize" type="text">
+				<a ng-click="createComp(adminGameID, adminDate, adminDesc, adminPrize)">Create Competition</a>	    
+			</accordion-group>
+		</accordion>
+	</div>
+</div>
