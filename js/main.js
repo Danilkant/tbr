@@ -202,6 +202,7 @@ app.controller('UsersController', function($scope, $routeParams, $http){
     getData: function(){
       $http({
         method: 'POST',
+        url: '/php/post.user.selected.php',
         data: {userid: $scope.params.userid}
       }).then(function successCallback(response){
         $scope.ud = response.data;
