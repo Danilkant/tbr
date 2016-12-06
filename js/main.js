@@ -26,7 +26,7 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
   $scope.params = $routeParams;
   $scope.update_imglink = null;
   $scope.update_desc = null;
-  
+
 
   $scope.teamData = {
     td: null,
@@ -112,8 +112,8 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
 
       }else{
         $scope.warnMe("warning");
-      } 
-      
+      }
+
     }
 
   };
@@ -142,7 +142,7 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
           $scope.warnMe("success");
       }else{
         $scope.warnMe("warning");
-      } 
+      }
     },
 
     removeUserTeam: function(val){
@@ -158,8 +158,8 @@ app.controller('TeamsController', function($scope, $routeParams, $http) {
         $scope.warnMe("success");
       }else{
         $scope.warnMe("warning");
-      } 
-      
+      }
+
     }
   };
 });
@@ -168,7 +168,7 @@ app.controller('UsersController', function($scope, $routeParams, $http){
   $scope.name = 'UsersController';
   $scope.params = $routeParams;
 
-  
+
   $scope.teamData = {
     td: null,
 
@@ -191,6 +191,8 @@ app.controller('UsersController', function($scope, $routeParams, $http){
 
   $scope.userData = {
     ud: null,
+
+    tdt: null,
 
     inputEmail: null,
     inputUsername: null,
@@ -257,6 +259,8 @@ app.controller('UsersController', function($scope, $routeParams, $http){
     console.log(response);
       });
     }//function end
+
+
   };//scope end
 
 
@@ -405,7 +409,7 @@ app.controller('LoginController', function($scope, $routeParams, $http, $cookies
             $scope.warnMe("loginSuccess");
           }else{
             $scope.warnMe("loginFailed");
-          }    
+          }
     });
   };
 });

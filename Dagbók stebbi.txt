@@ -1,0 +1,13 @@
+17. Nóv ákváðum hvað við vildum gera og byrjuðum að gera tilbúið fyrir verkefnið
+
+18-20. nóv fór aðallega í að reyna læra eitthvað á Angular
+
+22. Nóv byrjuðum að hanna gagnagrunninn
+
+24. Nóv byrjaðir að vinna að einhverju leiti og ég aðallega að reyna læra á angular
+
+1. Des bunir að vera vinna eitthvað upp að þessu og er að læra meira á angular
+
+3. Des er svona að koma að lokum af aðal partinum mínum af síðunni
+
+5. Des klúðraðist eitthvað og þarf að vinna upp mesta partinn af User síðunni aftur upp því hann eyddist við að færa á Git. 

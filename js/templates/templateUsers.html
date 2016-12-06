@@ -4,47 +4,61 @@
 			<ul class="small-block-grid-2 animate-container">
 				<li>
 					<img class="image-cropper" src="{{ ud.User.imgLink }}" alt="User Image">
+					<accordion>
+						<accordion-group heading="Create Team">
+							<p>
+								Team Name
+							</p>
+							<input Type="text" ng-model ="ud.inputTeamName"/>
+							<p>
+								Team Tag
+							</p>
+							<input Type="text" ng-model ="ud.inputTeamTag"/>
+							<p>
+								Team Description
+							</p>
+							<input Type="text" ng-model ="ud.inputTeamDesc"/>
+							<button ng-click="userData.userCreateNewTeam(ud.inputTeamName, ud.inputTeamTag, ud.inputTeamDesc, ud.User.ID)">Submit</button>
+						</accordion-group>
+					</accordion>
 				</li>
 				<li>
 					<h4>{{ ud.User.Username }}</h4>
 					<h5>{{ ud.User.Name }}</h5>
-
+					<p>{{ ud.User.Email }}</p>
+					<accordion>
+						<accordion-group heading="Change Password">
+							<p>
+								insert new password
+							</p>
+							<input type="password" ng-model = "ud.inputPassword"/>
+							<button ng-click="userData.updateUserPassword(ud.User.ID, ud.inputPassword)">Submit</button>
+						</accordion-group>
+						<accordion-group heading="Change Username & Email">
+							<p>
+								insert new username and email
+							</p>
+							<input type="text" ng-model="ud.inputUsername"/>
+							<input type="text" ng-model="ud.inputEmail" />
+							<button ng-click="userData.updateUserEmail(ud.inputEmail, ud.inputUsername)">Submit</button>
+						</accordion-group>
+					</accordion>
 				</li>
+
 			</ul>
 		</div>
 		<div id="userInfo">
 			<ul class="small-block-grid-1">
-				<li>
-				<a>Change Password</a>
-				</li>
-				<li>
-				<a>Change Email </a>
-				</li>
-				<li>
-				<a>Change Username</a>
-				</li>
-				<li>
-					<p>{{ ud.User.Email }}</p>
-				</li>
+
+
 			</ul>
 			<ul class="small-block-grid-1">
-				<p>{{ TeamComps.TeamName }}</p>
+
 			</ul>
 		</div>
 	</div>
 	<div class="large-4 columns" id="rightUser">
-		<h4>Competitions signed up for</h4>
-		<ul class="small-block-grid-1 animate-container" ng-repeat="item in ud.TeamComps">
-			<hr>
-			<li>
-				{{ item.gameName }} {{ item.compDate }}
-				
-				<a href="/teams/{{ item.ID }}">{{ item.TeamName }}</a>
-			</li>
-		</ul>
+
 	</div>
-	<div class="small-4 columns" id="bottomUser">
-		<hr>
-		<a href="/">Go Back</a>
-	</div>
+
 </div>

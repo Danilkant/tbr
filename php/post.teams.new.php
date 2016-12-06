@@ -9,11 +9,17 @@
 
     $description = $data->desc;
 
-    $sth = $dbh->prepare('INSERT IGNORE INTO team(teamname, teamtag, description)
-                    VALUES (:teamname, :teamtag, :description)');
+    $teamOwner = $data->userid;
+
+    $sth = $dbh->prepare('INSERT IGNORE INTO team(teamname, teamtag, description, teamOwner)
+                    VALUES (:teamname, :teamtag, :description, :teamOwner)');
     $sth->bindParam(':teamname', $teamname);
     $sth->bindParam(':teamtag', $teamtag);
     $sth->bindParam(':description', $description);
-              
+    $sth->bindParam(':teamOwner', $teamOwner);
+
+    $sth = $dbh->prepare('INSERT INTO team_user(team_id, user_id) VALUES ((SELECT id FROM team where teamname = :teamname), :teamOwner)');
+    $sth->bindParam(":teamname", $teamname);
+    $sth->bindParam(":teamOwner", $teamOwner);
     $sth->execute();
 ?>

@@ -9,9 +9,11 @@ $toReturn = [];
 
 $tempuserarray = [];
 $tempcomparray = [];
+$tempteamsarray = [];
 
 $keyword1 = "User";
 $keyword2 = "TeamComps";
+$keyword3 = "Teams";
 
 
 $sth = $dbh->prepare('SELECT
@@ -51,8 +53,21 @@ $tempcomparray = $sth->fetchAll();
 $result = count($tempcomparray);
 
 
+
+
+
+$sth = $dbh->prepare('SELECT t.teamname from team t inner join team_user tu on t.id = tu.team_id where tu.user_id = :userid');
+
+$sth->bindParam(':userid', $ID);
+
+$sth->execute();
+$sth->setFetchMode(PDO::FETCH_ASSOC);
+$tempteamsarray = $sth->fetchAll();
+
+
 $toReturn[$keyword1] = $tempuserarray;
 $toReturn[$keyword2] = $tempcomparray;
+$toreturn[$keyword3] = $tempteamsarray;
 
 echo (json_encode($toReturn, JSON_UNESCAPED_SLASHES));
 ?>
