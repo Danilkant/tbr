@@ -1,64 +1,56 @@
 <div ng-init="userData.getData()">
-	<div class="large-8 columns" id="leftUser">
-		<div id="userPicture">
-			<ul class="small-block-grid-2 animate-container">
-				<li>
-					<img class="image-cropper" src="{{ ud.User.imgLink }}" alt="User Image">
-					<accordion>
-						<accordion-group heading="Create Team">
-							<p>
-								Team Name
-							</p>
-							<input Type="text" ng-model ="ud.inputTeamName"/>
-							<p>
-								Team Tag
-							</p>
-							<input Type="text" ng-model ="ud.inputTeamTag"/>
-							<p>
-								Team Description
-							</p>
-							<input Type="text" ng-model ="ud.inputTeamDesc"/>
-							<button ng-click="userData.userCreateNewTeam(ud.inputTeamName, ud.inputTeamTag, ud.inputTeamDesc, ud.User.ID)">Submit</button>
-						</accordion-group>
-					</accordion>
-				</li>
-				<li>
-					<h4>{{ ud.User.Username }}</h4>
-					<h5>{{ ud.User.Name }}</h5>
-					<p>{{ ud.User.Email }}</p>
-					<accordion>
-						<accordion-group heading="Change Password">
-							<p>
-								insert new password
-							</p>
-							<input type="password" ng-model = "ud.inputPassword"/>
-							<button ng-click="userData.updateUserPassword(ud.User.ID, ud.inputPassword)">Submit</button>
-						</accordion-group>
-						<accordion-group heading="Change Username & Email">
-							<p>
-								insert new username and email
-							</p>
-							<input type="text" ng-model="ud.inputUsername"/>
-							<input type="text" ng-model="ud.inputEmail" />
-							<button ng-click="userData.updateUserEmail(ud.inputEmail, ud.inputUsername)">Submit</button>
-						</accordion-group>
-					</accordion>
-				</li>
-
-			</ul>
+	<div class="large-8 columns">
+		<div class="userPicture small-6 columns">
+			<img class="image-cropper" src="{{ ud.User.imgLink }}" alt="User Image">
 		</div>
-		<div id="userInfo">
-			<ul class="small-block-grid-1">
+		<div class="small-6 columns" id="userinfo">
+			<h4>{{ ud.User.Username }}</h4>
+			<h5>{{ ud.User.Name }}</h5>
+			<p>{{ ud.User.Email }}</p>
+		</div>
 
-
-			</ul>
-			<ul class="small-block-grid-1">
-
-			</ul>
+		<div class="columns small-12">
+			<accordion>
+				<accordion-group heading="Create Team">
+					<p>
+						Team Name
+					</p>
+					<input Type="text" ng-model ="ud.inputTeamName"/>
+					<p>
+						Team Tag
+					</p>
+					<input Type="text" ng-model ="ud.inputTeamTag"/>
+					<p>
+						Team Description
+					</p>
+					<input Type="text" ng-model ="ud.inputTeamDesc"/>
+					<button ng-click="userData.userCreateNewTeam(ud.inputTeamName, ud.inputTeamTag, ud.inputTeamDesc, ud.User.ID)">Submit</button>
+					</accordion-group>
+				<accordion-group heading="Change Password">
+					<p>
+						insert new password
+					</p>
+					<input type="password" ng-model = "ud.inputPassword"/>
+					<button ng-click="userData.updateUserPassword(ud.User.ID, ud.inputPassword)">Submit</button>
+				</accordion-group>
+				<accordion-group heading="Change Username & Email">
+					<p>
+						insert new username and email
+					</p>
+					<input type="text" ng-model="ud.inputUsername"/>
+					<input type="text" ng-model="ud.inputEmail" />
+					<button ng-click="userData.updateUserEmail(ud.inputEmail, ud.inputUsername)">Submit</button>
+				</accordion-group>
+			</accordion>
 		</div>
 	</div>
-	<div class="large-4 columns" id="rightUser">
-
+	<div class="large-4 columns" ng-init="teamData.getData()">
+		<pre>Teams you're in</pre>
+		<ul ng-repeat="item in td">
+			<li>
+				<a href="/teams/{{item.ID}}">{{item.Name}}</a>/<a ng-if="currentUser.id != item.Owner" ng-click="td.removeUserTeam(item.Owner)">Leave Teame</a><pre ng-if="currentUser.id == item.Owner">You're the owner</pre>
+			</li>
+		</ul>
 	</div>
 
 </div>

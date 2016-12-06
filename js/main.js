@@ -175,15 +175,32 @@ app.controller('UsersController', function($scope, $routeParams, $http){
     getData: function(){
       $http({
         method: 'POST',
-        url: '/php/post.teams.selected.php',
-        data: {teamid: $scope.params.teamid}
+        url: '/php/post.teams.user.id.php',
+        data: {userid: $scope.params.userid}
       }).then(function successCallback(response) {
+
           $scope.td = response.data;
-
-
+          console.log($scope.td);
         }, function errorCallback(response) {
           console.log("Failed to retrieve data Team Information.")
         });
+    },
+
+    removeUserTeam: function(val){
+      if($scope.currentUser.id == val){
+        console.log(true);
+        $http({
+          method: 'POST',
+          url: '/php/post.teams.remove.user.php',
+          data: {userid: $scope.currentUser.id}
+        }).then(function successCallback(response) {
+          $scope.teamData.getData();
+        });
+        $scope.warnMe("success");
+      }else{
+        $scope.warnMe("warning");
+      }
+
     }
 
   };
